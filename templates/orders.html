@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Заказы</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Клиент</th>
+            <th>Сотрудник</th>
+            <th>Стоимость</th>
+            <th>Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.client.name }}</td>
+            <td>{{ order.staff.name }}</td>
+            <td>{{ order.cost }}</td>
+            <td>{{ order.date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
