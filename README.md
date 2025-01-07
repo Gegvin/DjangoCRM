@@ -92,7 +92,9 @@ python manage.py drf_create_token <имя_пользователя>
       и добавить в него переменные окружения:
   	
 SECRET_KEY="django-insecure-..."
+
 API_BASE_URL="http://127.0.0.1:8000/"
+
 API_TOKEN="your_api_token"
 
 8. Запустить сервер Django:
