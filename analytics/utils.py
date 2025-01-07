@@ -1,8 +1,8 @@
 import requests
 from django.conf import settings
 
-API_BASE_URL = 'http://127.0.0.1:8000/'  # URL вашего DjangoCRM API
-API_TOKEN = 'b8a3f1412fddb243e9ea1bc1ed82805d33b3b07e'  # Замените на ваш токен доступа
+API_BASE_URL = settings.API_BASE_URL
+API_TOKEN = settings.API_TOKEN
 
 def get_orders():
     url = f"{API_BASE_URL}orders/"

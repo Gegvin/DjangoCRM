@@ -5,8 +5,6 @@
 <head>
     <title>Панель аналитики</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <!-- Подключение Chart.js для визуализации данных -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <div class="container">
@@ -22,103 +20,56 @@
             </div>
         </div>
 
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <h4>Доход по типу кофе</h4>
-                <canvas id="coffeeChart"></canvas>
-            </div>
-            <div class="col-md-6">
-                <h4>Доход по типу сиропа</h4>
-                <canvas id="syrupChart"></canvas>
-            </div>
+        <!-- Распределение дохода по типу кофе -->
+        <div class="mt-4">
+            <h4>Доход по типу кофе</h4>
+            {% if revenue_by_coffee %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Тип кофе</th>
+                            <th>Доход (₽)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for coffee, amount in revenue_by_coffee.items %}
+                        <tr>
+                            <td>{{ coffee }}</td>
+                            <td>{{ amount }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Нет данных по типу кофе.</p>
+            {% endif %}
+        </div>
+
+        <!-- Распределение дохода по типу сиропа -->
+        <div class="mt-4">
+            <h4>Доход по типу сиропа</h4>
+            {% if revenue_by_syrup %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Тип сиропа</th>
+                            <th>Доход (₽)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for syrup, amount in revenue_by_syrup.items %}
+                        <tr>
+                            <td>{{ syrup }}</td>
+                            <td>{{ amount }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Нет данных по типу сиропа.</p>
+            {% endif %}
         </div>
     {% endif %}
 </div>
-
-{% if not error %}
-<script>
-    // Преобразуем Python-данные в JSON
-    const revenueByCoffee = {{ revenue_by_coffee|safe }};
-    const revenueBySyrup = {{ revenue_by_syrup|safe }};
-
-    // Проверка данных
-    console.log("Revenue by coffee:", revenueByCoffee);
-    console.log("Revenue by syrup:", revenueBySyrup);
-
-    // Преобразуем данные в массивы для Chart.js
-    const coffeeLabels = Object.keys(revenueByCoffee);
-    const coffeeValues = Object.values(revenueByCoffee);
-
-    const syrupLabels = Object.keys(revenueBySyrup);
-    const syrupValues = Object.values(revenueBySyrup);
-
-    // Данные для графика по кофе
-    const coffeeData = {
-        labels: coffeeLabels,
-        datasets: [{
-            label: 'Доход по кофе (₽)',
-            data: coffeeValues,
-            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        }]
-    };
-
-    // Конфигурация графика по кофе
-    const coffeeConfig = {
-        type: 'bar',
-        data: coffeeData,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        },
-    };
-
-    // Рендер графика по кофе
-    const coffeeChart = new Chart(
-        document.getElementById('coffeeChart'),
-        coffeeConfig
-    );
-
-    // Данные для графика по сиропу
-    const syrupData = {
-        labels: syrupLabels,
-        datasets: [{
-            label: 'Доход по сиропу (₽)',
-            data: syrupValues,
-            backgroundColor: 'rgba(255, 99, 132, 0.6)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1
-        }]
-    };
-
-    // Конфигурация графика по сиропу
-    const syrupConfig = {
-        type: 'pie',
-        data: syrupData,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Доход по сиропам'
-                }
-            }
-        },
-    };
-
-    // Рендер графика по сиропу
-    const syrupChart = new Chart(
-        document.getElementById('syrupChart'),
-        syrupConfig
-    );
-</script>
-{% endif %}
 </body>
 </html>
