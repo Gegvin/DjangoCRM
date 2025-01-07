@@ -8,34 +8,59 @@ DjangoCRM — это простое пет-CRM-приложение на Django,
 
 Основные Компоненты
 	1.	Приложение crm
-	•	Модель Order: хранит информацию о заказе (кофе, сироп, статус оплаты, цена и т. д.).
-	•	ViewSet OrderViewSet: эндпоинт API (использует Django REST Framework) для CRUD-операций над заказами.
-	•	Функции custom_order_list, create_order, mark_paid, delete_order: обычные Django-вьюхи для HTML-страниц, где пользователи могут просматривать, создавать, оплачивать или удалять заказы.
-	2.	Приложение analytics
-	•	Функция dashboard: отображает аналитику по заказам (количество, общий доход, распределение по типу кофе/сиропа).
-	•	Функция get_orders() (в utils.py): через HTTP-запрос к эндпоинту /orders/ получает список заказов (JSON), а потом обрабатывает/группирует данные (например, с помощью pandas).
-	3.	Django REST Framework
-	•	Даёт набор API-эндпоинтов для работы с заказами и сотрудниками.
-	•	Пример эндпоинтов (автоматически сформированных роутером в crm.urls):
-	•	/orders/ (GET: список заказов, POST: создать заказ)
-	•	/orders/<id>/ (GET, PUT, PATCH, DELETE)
-	•	/staff/ (аналогично для сотрудников)
+	
+ •	Модель Order: хранит информацию о заказе (кофе, сироп, статус оплаты, цена и т. д.).
+	
+ •	ViewSet OrderViewSet: эндпоинт API (использует Django REST Framework) для CRUD-операций над заказами.
+	
+ •	Функции custom_order_list, create_order, mark_paid, delete_order: обычные Django-вьюхи для HTML-страниц, где пользователи могут просматривать, создавать, оплачивать или удалять заказы.
+	
+ 2.	Приложение analytics
+	
+ •	Функция dashboard: отображает аналитику по заказам (количество, общий доход, распределение по типу кофе/сиропа).
+	
+ •	Функция get_orders() (в utils.py): через HTTP-запрос к эндпоинту /orders/ получает список заказов (JSON), а потом обрабатывает/группирует данные (например, с помощью pandas).
+	
+ 3.	Django REST Framework
+	
+ •	Даёт набор API-эндпоинтов для работы с заказами и сотрудниками.
+	
+ •	Пример эндпоинтов (автоматически сформированных роутером в crm.urls):
+	
+ •	/orders/ (GET: список заказов, POST: создать заказ)
+	
+ •	/orders/<id>/ (GET, PUT, PATCH, DELETE)
+	
+ •	/staff/ (аналогично для сотрудников)
 
 Основные URL
-	1.	Главный urls.py (корень проекта):
+	
+ 1.	Главный urls.py (корень проекта):
+
  •	"/admin/" — стандартная админка Django.
-	•	"/"       — ссылки из CRM/urls.py.
-	•	"/analytics/" — ссылки из analytics/urls.py.
+	
+ •	"/"       — ссылки из CRM/urls.py.
+	
+ •	"/analytics/" — ссылки из analytics/urls.py.
 
- 	2.	crm/urls.py:
+ 	
+  2.	crm/urls.py:
+  
   •	/orderss/ (список HTML)
-	•	/orderss/create/ (форма для создания заказа)
-	•	/orderss/<id>/paid/ (отметить оплачено)
-	•	/orderss/<id>/delete/ (удалить неоплаченный заказ)
-	•	/orders/ (API эндпоинт, см. DRF Router)
-	•	/orders/<id>/ (API CRUD, DRF)
+	
+ •	/orderss/create/ (форма для создания заказа)
+	
+ •	/orderss/<id>/paid/ (отметить оплачено)
+	
+ •	/orderss/<id>/delete/ (удалить неоплаченный заказ)
+	
+ •	/orders/ (API эндпоинт, см. DRF Router)
+	
+ •	/orders/<id>/ (API CRUD, DRF)
 
- 	3.	analytics/urls.py:
+ 	
+  3.	analytics/urls.py:
+  
   •	/analytics/dashboard/: HTML-страница с аналитикой заказов.
 
   Установка и Запуск
