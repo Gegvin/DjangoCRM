@@ -1,0 +1,75 @@
+<!-- analytics/templates/analytics/dashboard.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Панель аналитики</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-4">Панель аналитики</h2>
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% else %}
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h4>Общее количество заказов: {{ total_orders }}</h4>
+                <h4>Общий доход: {{ total_revenue }} ₽</h4>
+            </div>
+        </div>
+
+        <!-- Распределение дохода по типу кофе -->
+        <div class="mt-4">
+            <h4>Доход по типу кофе</h4>
+            {% if revenue_by_coffee %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Тип кофе</th>
+                            <th>Доход (₽)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for coffee, amount in revenue_by_coffee.items %}
+                        <tr>
+                            <td>{{ coffee }}</td>
+                            <td>{{ amount }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Нет данных по типу кофе.</p>
+            {% endif %}
+        </div>
+
+        <!-- Распределение дохода по типу сиропа -->
+        <div class="mt-4">
+            <h4>Доход по типу сиропа</h4>
+            {% if revenue_by_syrup %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Тип сиропа</th>
+                            <th>Доход (₽)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for syrup, amount in revenue_by_syrup.items %}
+                        <tr>
+                            <td>{{ syrup }}</td>
+                            <td>{{ amount }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Нет данных по типу сиропа.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>

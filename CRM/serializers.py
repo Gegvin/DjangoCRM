@@ -1,17 +1,29 @@
 from rest_framework import serializers
-from .models import Client, Order, Staff
-
-class ClientSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Client
-        fields = "__all__"
+from .models import Order, Staff
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = "__all__"
+        fields = [
+            'id',
+            'order_number',
+            'coffee',
+            'syrup',
+            'status',
+            'created_at',
+            'coffee_price',
+            'syrup_price',
+            'total_price',
+        ]
+        read_only_fields = [
+            'order_number',
+            'created_at',
+            'coffee_price',
+            'syrup_price',
+            'total_price',
+        ]
 
 class StaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = Staff
-        fields = "__all__"
+        fields = ['id', 'name', 'email']
